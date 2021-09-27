@@ -1,26 +1,26 @@
 package main
 
 import (
-	  "encoding/json"
-    "fmt"
-		"time"
-    "net/http"
+	"encoding/json"
+	"fmt"
+	"net/http"
+	"time"
 )
 
 func timeHandler(w http.ResponseWriter, req *http.Request) {
-		w.Header().Set("Content-Type", "application/json")
-		resp := make(map[string]string)
-		resp["time"] = time.Now().Format(time.RFC3339)
-		jsonResp, err := json.Marshal(resp)
-		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			fmt.Fprintf(w, "Error")
-		} else {
-		  w.Write(jsonResp)
-		}
+	w.Header().Set("Content-Type", "application/json")
+	resp := make(map[string]string)
+	resp["time"] = time.Now().Format(time.RFC3339)
+	jsonResp, err := json.Marshal(resp)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Fprintf(w, "Error")
+	} else {
+		w.Write(jsonResp)
+	}
 }
 
 func main() {
-    http.HandleFunc("/time", timeHandler)
-    http.ListenAndServe(":8795", nil)
+	http.HandleFunc("/time", timeHandler)
+	http.ListenAndServe(":8795", nil)
 }
